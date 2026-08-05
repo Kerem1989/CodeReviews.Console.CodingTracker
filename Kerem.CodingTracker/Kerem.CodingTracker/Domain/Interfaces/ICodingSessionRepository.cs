@@ -1,4 +1,6 @@
-﻿namespace Kerem.CodingTracker.Domain.Interfaces ;
+﻿using Kerem.CodingTracker.Domain.Entities;
+
+namespace Kerem.CodingTracker.Domain.Interfaces ;
 
     public interface ICodingSessionRepository
     {

@@ -1,5 +1,4 @@
 ﻿using Kerem.CodingTracker.Features.CreateCodingSession;
-using Kerem.CodingTracker.Infrastructure.Repositories;
 
 namespace Kerem.CodingTracker.UI ;
 

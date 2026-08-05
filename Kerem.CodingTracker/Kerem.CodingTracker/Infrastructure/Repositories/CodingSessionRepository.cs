@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Kerem.CodingTracker.Domain.Entities;
 using Kerem.CodingTracker.Domain.Interfaces;
 
 namespace Kerem.CodingTracker.Infrastructure.Repositories ;

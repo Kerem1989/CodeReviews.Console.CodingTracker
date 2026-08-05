@@ -1,9 +1,9 @@
-﻿namespace Kerem.CodingTracker ;
+﻿namespace Kerem.CodingTracker.Domain.Entities ;
 
     public class CodingSession
     {
-        public int id { get; set; }
-        public DateTime startTime { get; set; }
-        public DateTime endTime { get; set; }
-        public Decimal duration { get; set; }
+        public int Id { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
+        public Decimal Duration { get; set; }
     }
