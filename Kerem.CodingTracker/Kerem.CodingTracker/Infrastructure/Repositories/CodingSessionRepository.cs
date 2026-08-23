@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Kerem.CodingTracker.Domain.Entities;
 using Kerem.CodingTracker.Domain.Interfaces;
+using Spectre.Console;
 
 namespace Kerem.CodingTracker.Infrastructure.Repositories ;
 
@@ -25,6 +26,28 @@ namespace Kerem.CodingTracker.Infrastructure.Repositories ;
             var connection = _dapperDbContext.GetConnection();
             var sql = "INSERT INTO CodingSession (startTime, endTime, duration) VALUES (@StartTime, @EndTime, @Duration)";
             connection.Execute(sql, codingSession);
+        }
+
+        public int CountCodingSessions()
+        {
+            var connection = _dapperDbContext.GetConnection();
+            var sql = "SELECT COUNT(*) FROM CodingSession";
+            return connection.ExecuteScalar<int>(sql);
+        }
+
+        public CodingSession FindById(int id)
+        {
+            var connection = _dapperDbContext.GetConnection();
+            var sql = "SELECT * FROM  CodingSession WHERE Id = @Id";
+            var codingSession = connection.Query<CodingSession>(sql, new { Id = id }).FirstOrDefault();
+            return codingSession;
+        }
+
+        public void Save(CodingSession codingSession)
+        {
+            var connection = _dapperDbContext.GetConnection();
+            var sql = $"UPDATE CodingSession SET startTime = @StartTime, duration = @Duration WHERE Id = @Id";
+            connection.ExecuteScalar(sql, new  { codingSession.StartTime, codingSession.Duration, codingSession.Id });
         }
         
         

@@ -1,12 +1,16 @@
 ﻿using Kerem.CodingTracker;
-using Kerem.CodingTracker.Domain.Interfaces;
-using Kerem.CodingTracker.Features.CreateCodingSession;
-using Kerem.CodingTracker.Infrastructure.Repositories;
 using Kerem.CodingTracker.UI;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
-ConsoleMenu startProgram = new ConsoleMenu();
-var connectionString = @"Data Source=localhost\SQLEXPRESS;Initial Catalog=CodingTracker;Integrated Security=true;TrustServerCertificate=true;";   
-DapperDbContext dapperDbContext = new DapperDbContext(connectionString);
-ICodingSessionRepository codingSessionRepository = new CodingSessionRepository(dapperDbContext);
-CreateCodingSession createCodingSession = new CreateCodingSession(codingSessionRepository);
-startProgram.Menu(createCodingSession);
+var builder = new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json", optional: false);
+IConfiguration config = builder.Build();
+var connectionString = config.GetConnectionString("DefaultConnection");
+
+var serviceProvider = new ServiceCollection()
+        .AddApplication(connectionString)
+        .BuildServiceProvider();
+
+serviceProvider.GetRequiredService<ConsoleMenu>().Menu();

@@ -17,9 +17,17 @@ namespace Kerem.CodingTracker.Features.CreateCodingSession ;
         {
             CodingSession codingSession = new CodingSession();
             AnsiConsole.MarkupLine("[bold steelblue]Please enter the start date in the format of yyyy-mm-dd hh:mm[/]");
-
+            AnsiConsole.MarkupLine("[Orange1]Enter abort to exit back to the main menu[/]");
 
             var startDate = Console.ReadLine() ?? " ";
+            bool shouldAbort = Validator.Abort(startDate);
+
+            if (shouldAbort)
+            {
+                AnsiConsole.MarkupLine("[Orange1]Aborted[/]");
+                return;
+            }
+            
 
             var emptyStartDate = string.IsNullOrEmpty(startDate);
             if (emptyStartDate)
@@ -30,32 +38,42 @@ namespace Kerem.CodingTracker.Features.CreateCodingSession ;
             }
                 
    
-            var correctFormat = CreateCodingSessionValidator.ValidateDateFormat(startDate);
+            var correctFormat = Validator.ValidateDateFormat(startDate);
             
             if (!correctFormat)
             {
-                Console.WriteLine("Format is invalid");
+                AnsiConsole.MarkupLine("[red]Format is invalid[/]");
                 return;
             }
 
             DateTime startTime = DateTime.Parse(startDate);
             codingSession.StartTime = startTime;
             
-            Console.WriteLine("Please enter the end date");
+            AnsiConsole.MarkupLine("[bold steelblue]Please enter the end date in the format of yyyy-mm-dd hh:mm[/]");
+
             var endDate = Console.ReadLine() ?? " ";
+            
+            shouldAbort = Validator.Abort(startDate);
+
+            if (shouldAbort)
+            {
+                AnsiConsole.MarkupLine("[Orange1]Aborted[/]");
+                return;
+            }
+            
             var emptyEndDate = string.IsNullOrEmpty(endDate);
 
             if (emptyEndDate)
             {
-                Console.WriteLine("Date cannot be empty");
+                AnsiConsole.MarkupLine("[red]Date cannot be empty[/]");
                 return;
             }
             
-            correctFormat = CreateCodingSessionValidator.ValidateDateFormat(endDate);
+            correctFormat = Validator.ValidateDateFormat(endDate);
 
             if (!correctFormat)
             {
-                Console.WriteLine("Format is invalid");
+                AnsiConsole.MarkupLine("[red]Format is invalid[/]");
                 return;
             }
             
@@ -68,5 +86,6 @@ namespace Kerem.CodingTracker.Features.CreateCodingSession ;
             codingSession.Duration = minutes;
             
             _codingSessionRepository.Create(codingSession);
+            AnsiConsole.MarkupLine("[green]Coding session created[/]");
         }
     }

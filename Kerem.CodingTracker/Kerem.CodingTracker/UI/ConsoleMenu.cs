@@ -1,45 +1,59 @@
-﻿using Kerem.CodingTracker.Features.CreateCodingSession;
+﻿using Kerem.CodingTracker.Features;
+using Kerem.CodingTracker.Features.CreateCodingSession;
+using Kerem.CodingTracker.Features.EditCodingSession;
+using Kerem.CodingTracker.Features.FindAllCodingSession;
+using Spectre.Console;
 
 namespace Kerem.CodingTracker.UI ;
 
     public class ConsoleMenu
     {
-        public void Menu(CreateCodingSession createCodingSession)
+        private readonly CreateCodingSession  _createCodingSession;
+        private readonly CountCodingSession _countCodingSession;
+        private readonly FindAllCodingSession _findAllCodingSession;
+        private readonly EditCodingSession _editCodingSession;
+
+        public ConsoleMenu(CreateCodingSession createCodingSession, CountCodingSession countCodingSession, FindAllCodingSession findAllCodingSession, EditCodingSession editCodingSession )
         {
-            bool exit = false;
-            Console.WriteLine("Welcome to the Coding Tracker!");
-            Console.WriteLine();
-            while (!exit)
+            _createCodingSession = createCodingSession;
+            _countCodingSession = countCodingSession;
+            _findAllCodingSession = findAllCodingSession;
+            _editCodingSession = editCodingSession;
+        }
+
+        public void Menu()
+        {
+            AnsiConsole.Write(new FigletText("Coding Tracker").Color(Color.SteelBlue));
+            while (true)
             {
-                Console.WriteLine();
-                Console.WriteLine("Please select an option:");
-                Console.WriteLine("1. Create a new coding session");
-                Console.WriteLine("2. View all coding sessions");
-                Console.WriteLine("3. Delete a coding session");
-                Console.WriteLine("4. Update a coding session");
-                Console.WriteLine("5. Exit");
-                int choice = int.TryParse(Console.ReadLine() ?? string.Empty, out choice) ? choice : 0;
-                Console.WriteLine();
-                switch (choice)
+                string choice = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .Title("Please select an [bold steelblue]option[/]:")
+                        .AddChoices(
+                            "1. View all coding sessions",
+                            "2. Create a coding session",
+                            "3. Edit a coding session",
+                            "4. Delete a coding session",
+                            "5. Exit"));
+
+                switch (choice[0])
                 {
-                    case 1:
-                        createCodingSession.Create();
+                    case '1':
+                        _countCodingSession.CountCodingSessions();
+                        _findAllCodingSession.FindAll();
                         break;
-                    case 2:
+                    case '2':
+                        _createCodingSession.Create();
                         break;
-                    case 3:
+                    case '3':
+                        _findAllCodingSession.FindAll();
+                        _editCodingSession.CodingSessionEdit();
                         break;
-                    case 4:
+                    case '4':
                         break;
-                    case 5:
-                        exit = true;
-                        Console.WriteLine();
-                        Console.WriteLine("Goodbye!");
-                        break;
-                    default:
-                        Console.WriteLine();
-                        Console.WriteLine("Invalid option.");
-                        break;
+                    case '5':
+                        AnsiConsole.MarkupLine("[bold green]Goodbye![/]");
+                        return;
                 }
             }
         }
