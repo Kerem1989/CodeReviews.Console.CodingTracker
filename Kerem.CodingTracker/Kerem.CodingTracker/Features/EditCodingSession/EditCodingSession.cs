@@ -34,9 +34,12 @@ namespace Kerem.CodingTracker.Features.EditCodingSession ;
             while (runProgram)
             {
                 AnsiConsole.MarkupLine("[blue]Please select 1 to edit start date, 2 to edit end date or 3 to exit[/]");
-                int selectedProperty = Convert.ToInt32(Console.ReadLine());
+                int selectedProperty = int.TryParse(Console.ReadLine(), out var selected) ? selected : 0;
                 switch (selectedProperty)
                 {
+                    case 0:
+                        AnsiConsole.MarkupLine("The selected choice was a incorrect value");
+                        break;
                     case 1:
                         AnsiConsole.MarkupLine("[bold steelblue]Please enter the start date in the format of yyyy-mm-dd hh:mm[/]");
                         var startDate = Console.ReadLine() ?? " ";
