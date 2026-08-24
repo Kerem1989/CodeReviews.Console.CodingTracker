@@ -46,8 +46,15 @@ namespace Kerem.CodingTracker.Infrastructure.Repositories ;
         public void Save(CodingSession codingSession)
         {
             var connection = _dapperDbContext.GetConnection();
-            var sql = $"UPDATE CodingSession SET startTime = @StartTime, duration = @Duration WHERE Id = @Id";
-            connection.ExecuteScalar(sql, new  { codingSession.StartTime, codingSession.Duration, codingSession.Id });
+            var sql = $"UPDATE CodingSession SET startTime = @StartTime, endTime = @EndTime, duration = @Duration WHERE Id = @Id";
+            connection.ExecuteScalar(sql, new  { codingSession.StartTime, codingSession.EndTime, codingSession.Duration, codingSession.Id });
+        }
+        
+        public void  Delete(int id)
+        {
+            var connection = _dapperDbContext.GetConnection();
+            var sql = $"DELETE FROM CodingSession WHERE Id = @Id";
+            connection.ExecuteScalar(sql, new { Id = id });
         }
         
         

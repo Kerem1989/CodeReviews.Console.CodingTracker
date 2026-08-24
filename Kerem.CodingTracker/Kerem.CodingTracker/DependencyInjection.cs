@@ -1,5 +1,6 @@
 ﻿using Kerem.CodingTracker.Domain.Interfaces;
 using Kerem.CodingTracker.Features.CreateCodingSession;
+using Kerem.CodingTracker.Features.DeleteCodingSession;
 using Kerem.CodingTracker.Features.EditCodingSession;
 using Kerem.CodingTracker.Features.FindAllCodingSession;
 using Kerem.CodingTracker.Infrastructure.Repositories;
@@ -19,6 +20,7 @@ namespace Kerem.CodingTracker ;
             services.AddSingleton<FindAllCodingSession>();
             services.AddSingleton<EditCodingSession>();
             services.AddSingleton<ConsoleMenu>();
+            services.AddSingleton<DeleteCodingSession>();
             return services;
         }   
     }

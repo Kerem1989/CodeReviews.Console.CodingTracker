@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using Spectre.Console;
 
 namespace Kerem.CodingTracker.Features.CreateCodingSession ;
 
@@ -21,6 +22,15 @@ namespace Kerem.CodingTracker.Features.CreateCodingSession ;
                 return true;
             }
             return false;
+        }
+
+        public static bool ValidateStartAndEndDate(DateTime startDate, DateTime endDate)
+        {
+            if (startDate > endDate)
+            {
+                return false;
+            }
+            return true;
         }
         
     }

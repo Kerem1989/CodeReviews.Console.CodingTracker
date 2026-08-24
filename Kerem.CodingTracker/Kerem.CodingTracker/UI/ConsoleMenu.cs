@@ -1,5 +1,6 @@
 ﻿using Kerem.CodingTracker.Features;
 using Kerem.CodingTracker.Features.CreateCodingSession;
+using Kerem.CodingTracker.Features.DeleteCodingSession;
 using Kerem.CodingTracker.Features.EditCodingSession;
 using Kerem.CodingTracker.Features.FindAllCodingSession;
 using Spectre.Console;
@@ -12,13 +13,15 @@ namespace Kerem.CodingTracker.UI ;
         private readonly CountCodingSession _countCodingSession;
         private readonly FindAllCodingSession _findAllCodingSession;
         private readonly EditCodingSession _editCodingSession;
+        private readonly DeleteCodingSession _deleteCodingSession;
 
-        public ConsoleMenu(CreateCodingSession createCodingSession, CountCodingSession countCodingSession, FindAllCodingSession findAllCodingSession, EditCodingSession editCodingSession )
+        public ConsoleMenu(CreateCodingSession createCodingSession, CountCodingSession countCodingSession, FindAllCodingSession findAllCodingSession, EditCodingSession editCodingSession, DeleteCodingSession deleteCodingSession)
         {
             _createCodingSession = createCodingSession;
             _countCodingSession = countCodingSession;
             _findAllCodingSession = findAllCodingSession;
             _editCodingSession = editCodingSession;
+            _deleteCodingSession = deleteCodingSession;
         }
 
         public void Menu()
@@ -50,6 +53,8 @@ namespace Kerem.CodingTracker.UI ;
                         _editCodingSession.CodingSessionEdit();
                         break;
                     case '4':
+                        _findAllCodingSession.FindAll();
+                        _deleteCodingSession.DeleteCodingSessionById();
                         break;
                     case '5':
                         AnsiConsole.MarkupLine("[bold green]Goodbye![/]");

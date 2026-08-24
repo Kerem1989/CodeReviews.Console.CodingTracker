@@ -9,4 +9,6 @@ namespace Kerem.CodingTracker.Domain.Interfaces ;
         int CountCodingSessions();
         CodingSession? FindById(int id);
         void Save(CodingSession codingSession);
+        
+        void Delete(int id);
     }

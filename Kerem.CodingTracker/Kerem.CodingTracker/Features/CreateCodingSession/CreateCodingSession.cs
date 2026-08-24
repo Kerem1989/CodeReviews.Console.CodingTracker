@@ -53,14 +53,6 @@ namespace Kerem.CodingTracker.Features.CreateCodingSession ;
 
             var endDate = Console.ReadLine() ?? " ";
             
-            shouldAbort = Validator.Abort(startDate);
-
-            if (shouldAbort)
-            {
-                AnsiConsole.MarkupLine("[Orange1]Aborted[/]");
-                return;
-            }
-            
             var emptyEndDate = string.IsNullOrEmpty(endDate);
 
             if (emptyEndDate)
@@ -79,6 +71,14 @@ namespace Kerem.CodingTracker.Features.CreateCodingSession ;
             
             DateTime endTime = DateTime.Parse(endDate);
             codingSession.EndTime = endTime;
+            
+            var correctDateTime = Validator.ValidateStartAndEndDate(codingSession.StartTime, codingSession.EndTime);
+            
+            if (!correctDateTime)
+            {
+                AnsiConsole.MarkupLine("[red]Start date cannot be later than end date[/]");
+                return;
+            }
             
             
             var difference = endTime - startTime;
