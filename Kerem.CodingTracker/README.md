@@ -1,7 +1,7 @@
 # Coding Tracker
 
-A console app for logging coding sessions — start time, end time, and an automatically
-calculated duration — built as a follow-up to the Habit Logger project. This time the
+A console app for logging coding sessions, start time, end time, and an automatically
+calculated duration, built as a follow-up to the Habit Logger project. This time the
 focus is on handling dates/times correctly, using an external library (Dapper +
 Spectre.Console), and applying Separation of Concerns instead of one flat `Program.cs`.
 
@@ -118,15 +118,4 @@ end before it starts.
 dotnet test
 ```
 
-`Kerem.CodingTracker.Tests` covers the `Validator` methods — date format validation,
-the "abort" keyword check, and the start-before-end check — since these are pure
-functions with no I/O and are the easiest place for a date/time bug to hide.
-
-## Known limitations
-
-- The `CodingSession` table isn't created automatically; it needs to exist before the
-  app is run (see step 3 above).
-- Numeric input (session IDs, edit menu selections) isn't guarded against non-numeric
-  input yet.
-- No stopwatch-based live session tracking or filtering/sorting by period — these were
-  left as future improvements rather than implemented for this pass.
+`Kerem.CodingTracker.Tests` covers the `Validator` methods
